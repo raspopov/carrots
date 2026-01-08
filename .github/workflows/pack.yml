@@ -1,9 +1,6 @@
 name: Build Modrinth Modpack
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: push
 
 jobs:
   build:
@@ -25,3 +22,10 @@ jobs:
           name: carrots
           path: carrots.mrpack
           if-no-files-found: error
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: carrots.mrpack
+          tag_name: ${{ github.ref_name }}
