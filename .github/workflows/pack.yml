@@ -1,0 +1,9 @@
+- name: Pack
+  run: |
+    mkdir pack/
+    cp modrinth.index.json pack/
+    cp -r overrides/ pack/  # Если есть
+    cd pack/
+    zip -r ../carrots.mrpack .
+- uses: actions/upload-artifact@v4
+  with: { name: carrots.mrpack, path: carrots.mrpack }
