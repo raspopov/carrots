@@ -1,9 +1,27 @@
-- name: Pack
-  run: |
-    mkdir pack/
-    cp modrinth.index.json pack/
-    cp -r overrides/ pack/  # Если есть
-    cd pack/
-    zip -r ../carrots.mrpack .
-- uses: actions/upload-artifact@v4
-  with: { name: carrots.mrpack, path: carrots.mrpack }
+name: Build Modrinth Modpack
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pack
+        run: |
+          mkdir -p pack/
+          cp modrinth.index.json pack/
+          cd pack/
+          zip -r ../carrots.mrpack .
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: carrots
+          path: carrots.mrpack
+          if-no-files-found: error
