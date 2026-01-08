@@ -2,6 +2,9 @@ name: Build Modrinth Modpack
 
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
